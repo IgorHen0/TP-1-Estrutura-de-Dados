@@ -28,7 +28,7 @@ int Destroi(OrdInd_ptr o) {
         free(o->atributos);
     }
     if (o->indices != NULL) {
-        for (int i = 0; i < o->num_linhas; i++) { // Corrigido para num_linhas
+        for (int i = 0; i < o->num_linhas; i++) { 
             free(o->indices[i]);
         }
         free(o->indices);
@@ -38,7 +38,6 @@ int Destroi(OrdInd_ptr o) {
 }
 
 int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
-
     FILE *arq = fopen(nomeEntrada, "r");
 
     if (arq == NULL) {
@@ -60,6 +59,21 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
         if (*p == ',') {
             o->num_atributos++;
         }
+    }
+
+    // Aloca memória para os nomes dos atributos
+    o->atributos = (char **)malloc(o->num_atributos * sizeof(char *));
+    if (o->atributos == NULL) {
+        fclose(arq);
+        perror("Erro ao alocar memória para os atributos");
+        return -3;
+    }
+
+    // Armazena os nomes dos atributos
+    char *token = strtok(tamLinha, ",");
+    for (int i = 0; i < o->num_atributos; i++) {
+        o->atributos[i] = strdup(token);
+        token = strtok(NULL, ",");
     }
 
     // Conta quantas linhas tem o arquivo

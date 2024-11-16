@@ -24,8 +24,13 @@ int main(int argc, char **argv) {
 
     int num_atributos = NumAtributos(o);
     int num_linhas = NumLinhas(o);
+
     printf("Numero de atributos: %d\n", num_atributos);
     printf("Numero de linhas: %d\n", num_linhas);
+    printf("Atributos: ");
+    for (int i = 0; i < o->num_atributos; i++) {
+        printf("%s ", o->atributos[i]);
+    }
 
     Destroi(o);
     return 0;
