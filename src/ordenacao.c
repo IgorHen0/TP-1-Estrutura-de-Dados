@@ -1,4 +1,5 @@
 #include "../include/ordenacao.h"
+#include "../include/algoritmos.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,3 +1,4 @@
+#include "../include/algoritmos.h"
 #include "../include/ordenacao.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,20 +27,19 @@ int main(int argc, char **argv) {
     int num_linhas = NumLinhas(o);
     int tam_payload = TamPayload(o);
 
-    printf("Numero de atributos: %d\n", num_atributos);
-    printf("Numero de registros: %d\n", num_linhas);
-    printf("Tamanho do payload: %d\n", tam_payload);
-    printf("\nRegistros Carregados:\n");
-    printf("----------------------------------------------------------\n");
-
-    // Imprime cada registro
+    printf("Antes da ordenação:\n");
     for (int i = 0; i < num_linhas; i++) {
-        printf("Registro %d:\n", i + 1);
-        printf("  Nome: %s\n", o->nomes[i]);
-        printf("  ID: %s\n", o->ids[i]);
-        printf("  Endereço: %s\n", o->enderecos[i]);
-        printf("  Payload: %s\n", o->payloads[i]);
-        printf("----------------------------------------------------------\n");
+        printf("ID: %s, Nome: %s, Endereço: %s, Payload: %s\n", o->ids[i], o->nomes[i], o->enderecos[i], o->payloads[i]);
+    }
+
+    printf("------------------------");
+
+    // Ordena os IDs e ajusta os vetores associados
+    QuickSortStrings(o->ids, 0, num_linhas - 1, o);
+
+    printf("\nDepois da ordenação:\n");
+    for (int i = 0; i < num_linhas; i++) {
+        printf("ID: %s, Nome: %s, Endereço: %s, Payload: %s\n", o->ids[i], o->nomes[i], o->enderecos[i], o->payloads[i]);
     }
 
     Destroi(o);
