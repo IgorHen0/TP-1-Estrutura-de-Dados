@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 int main(int argc, char **argv) {
     OrdInd_ptr o = Cria();
@@ -23,23 +24,36 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    int num_atributos = NumAtributos(o);
+    //int num_atributos = NumAtributos(o);
     int num_linhas = NumLinhas(o);
-    int tam_payload = TamPayload(o);
+    //int tam_payload = TamPayload(o);
 
     printf("Antes da ordenação:\n");
     for (int i = 0; i < num_linhas; i++) {
-        printf("ID: %s, Nome: %s, Endereço: %s, Payload: %s\n", o->ids[i], o->nomes[i], o->enderecos[i], o->payloads[i]);
+        printf("ID: %s, Nome: %s, Endereço: %s, Payload: \n", o->ids[i], o->nomes[i], o->enderecos[i]);
     }
 
     printf("------------------------");
 
-    // Ordena os IDs e ajusta os vetores associados
-    QuickSortStrings(o->ids, 0, num_linhas - 1, o);
+    QuickSort(o, 0, num_linhas - 1, "ids");
 
-    printf("\nDepois da ordenação:\n");
+    printf("\nDepois da ordenação por ID:\n");
     for (int i = 0; i < num_linhas; i++) {
-        printf("ID: %s, Nome: %s, Endereço: %s, Payload: %s\n", o->ids[i], o->nomes[i], o->enderecos[i], o->payloads[i]);
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i]);
+    }
+
+    QuickSort(o, 0, num_linhas - 1, "enderecos");
+
+    printf("\nDepois da ordenação por Endereco:\n");
+    for (int i = 0; i < num_linhas; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i]);
+    }
+
+    QuickSort(o, 0, num_linhas - 1, "nomes");
+
+    printf("\nDepois da ordenação por Nome:\n");
+    for (int i = 0; i < num_linhas; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i]);
     }
 
     Destroi(o);

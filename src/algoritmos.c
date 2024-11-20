@@ -2,48 +2,75 @@
 #include "../include/ordenacao.h"
 #include <string.h>
 
-// Função auxiliar para trocar strings e os dados relacionados
-void TrocaStrings(char *vet[], int i, int j, OrdInd_ptr o) {
-    // Troca as strings no vetor
-    char *temp = vet[i];
-    vet[i] = vet[j];
-    vet[j] = temp;
+// Função para trocar elementos em todos os arrays
+void Swap(OrdInd_ptr o, int i, int j) {
+    char *temp;
 
-    // Troca os valores correspondentes em outras colunas
-    char *temp_nome = o->nomes[i];
+    // Troca os nomes
+    temp = o->nomes[i];
     o->nomes[i] = o->nomes[j];
-    o->nomes[j] = temp_nome;
+    o->nomes[j] = temp;
 
-    char *temp_endereco = o->enderecos[i];
+    // Troca os ids
+    temp = o->ids[i];
+    o->ids[i] = o->ids[j];
+    o->ids[j] = temp;
+
+    // Troca os endereços
+    temp = o->enderecos[i];
     o->enderecos[i] = o->enderecos[j];
-    o->enderecos[j] = temp_endereco;
+    o->enderecos[j] = temp;
 
-    char *temp_payload = o->payloads[i];
+    // Troca os payloads
+    temp = o->payloads[i];
     o->payloads[i] = o->payloads[j];
-    o->payloads[j] = temp_payload;
+    o->payloads[j] = temp;
 }
 
-// Particiona para QuickSort de strings
-int ParticionaStrings(char *vet[], int inicio, int fim, OrdInd_ptr o) {
-    char *pivo = vet[fim];
-    int pivo_indice = inicio;
-
-    for (int i = inicio; i < fim; i++) {
-        if (strcmp(vet[i], pivo) <= 0) {
-            TrocaStrings(vet, i, pivo_indice, o);
-            pivo_indice++;
-        }
+// Partição do QuickSort
+int Particao(OrdInd_ptr o, int inicio, int fim, const char *atributo) {
+    char *pivot;
+    if (strcmp(atributo, "nomes") == 0) {
+        pivot = o->nomes[fim];
+    } else if (strcmp(atributo, "ids") == 0) {
+        pivot = o->ids[fim];
+    } else if (strcmp(atributo, "enderecos") == 0) {
+        pivot = o->enderecos[fim];
+    } else {
+        printf("Atributo invalido!");
+        return -1;
     }
+    int i = inicio - 1;
 
-    TrocaStrings(vet, pivo_indice, fim, o);
-    return pivo_indice;
+    for (int j = inicio; j < fim; j++) {
+        if (strcmp(atributo, "nomes") == 0) {
+            if (strcmp(o->nomes[j], pivot) < 0) {
+                i++;
+                Swap(o, i, j);
+            }
+        } else if (strcmp(atributo, "ids") == 0) {
+            if (strcmp(o->ids[j], pivot) < 0) {
+                i++;
+                Swap(o, i, j);
+            }
+        } else if (strcmp(atributo, "enderecos") == 0) {
+            if (strcmp(o->enderecos[j], pivot) < 0) {
+                i++;
+                Swap(o, i, j);
+            }
+        } 
+    }
+    Swap(o, i + 1, fim);
+    return i + 1;
 }
 
-// QuickSort para strings, mantendo consistência com outros vetores
-void QuickSortStrings(char *vet[], int inicio, int fim, OrdInd_ptr o) {
+// Implementação do QuickSort
+void QuickSort(OrdInd_ptr o, int inicio, int fim, const char *atributo) {
     if (inicio < fim) {
-        int pivo_indice = ParticionaStrings(vet, inicio, fim, o);
-        QuickSortStrings(vet, inicio, pivo_indice - 1, o);
-        QuickSortStrings(vet, pivo_indice + 1, fim, o);
+        int pi = Particao(o, inicio, fim, atributo);
+
+        // Ordena os elementos à esquerda e à direita do pivô
+        QuickSort(o, inicio, pi - 1, atributo);
+        QuickSort(o, pi + 1, fim, atributo);
     }
 }

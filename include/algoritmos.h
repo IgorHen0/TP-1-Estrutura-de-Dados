@@ -6,9 +6,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-void Troca(int vet[], int i, int j);
-int Particiona(int vet[], int inicio, int fim);
-int ParticionaRandom(int vet[], int inicio, int fim);
-void QuickSortStrings(char *vet[], int inicio, int fim, OrdInd_ptr o);
+void Swap(OrdInd_ptr ordind, int i, int j);
+int Particao(OrdInd_t *ordind, int low, int high, const char *atributo);
+void QuickSort(OrdInd_t *ordind, int low, int high, const char *atributo);
 
 #endif // ALGORITMOS_H
