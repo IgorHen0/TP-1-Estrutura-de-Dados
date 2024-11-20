@@ -74,3 +74,28 @@ void QuickSort(OrdInd_ptr o, int inicio, int fim, const char *atributo) {
         QuickSort(o, pi + 1, fim, atributo);
     }
 }
+
+void BubbleSort(char **arr, char **arr2, char **arr3, char **arr4, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (strcmp(arr[j], arr[j + 1]) > 0) {
+
+                char *temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+                temp = arr2[j];
+                arr2[j] = arr2[j + 1];
+                arr2[j + 1] = temp;
+
+                temp = arr3[j];
+                arr3[j] = arr3[j + 1];
+                arr3[j + 1] = temp;
+
+                temp = arr4[j];
+                arr4[j] = arr4[j + 1];
+                arr4[j + 1] = temp;
+            }
+        }
+    }
+}

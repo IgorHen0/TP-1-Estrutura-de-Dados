@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
-int main(int argc, char **argv) {
+int main() {
     OrdInd_ptr o = Cria();
 
     char cwd[1024];
@@ -28,32 +28,51 @@ int main(int argc, char **argv) {
     int num_linhas = NumLinhas(o);
     //int tam_payload = TamPayload(o);
 
-    printf("Antes da ordenação:\n");
-    for (int i = 0; i < num_linhas; i++) {
-        printf("ID: %s, Nome: %s, Endereço: %s, Payload: \n", o->ids[i], o->nomes[i], o->enderecos[i]);
+    // printf("Antes da ordenação:\n");
+    // for (int i = 0; i < num_linhas; i++) {
+    //     printf("ID: %s, Nome: %s, Endereço: %s, Payload: \n", o->ids[i], o->nomes[i], o->enderecos[i]);
+    // }
+
+    // printf("------------------------");
+
+    // Quick
+
+    // QuickSort(o, 0, num_linhas - 1, "nomes");
+    // printf("\nDepois da ordenação por Nome:\n");
+    // for (int i = 0; i < num_linhas; i++) {
+    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    // }
+
+    // QuickSort(o, 0, num_linhas - 1, "ids");
+    // printf("\nDepois da ordenação por ID:\n");
+    // for (int i = 0; i < num_linhas; i++) {
+    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    // }
+
+    // QuickSort(o, 0, num_linhas - 1, "enderecos");
+    // printf("\nDepois da ordenação por Endereco:\n");
+    // for (int i = 0; i < num_linhas; i++) {
+    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    // }
+
+    // Bubble
+
+    printf("Ordenado por Nomes:\n");
+    BubbleSort(o->nomes, o->ids, o->enderecos, o->payloads, o->num_registros);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
-    printf("------------------------");
-
-    QuickSort(o, 0, num_linhas - 1, "ids");
-
-    printf("\nDepois da ordenação por ID:\n");
-    for (int i = 0; i < num_linhas; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i]);
+    printf("\nOrdenado por IDs:\n");
+    BubbleSort(o->ids, o->nomes, o->enderecos, o->payloads, o->num_registros);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
-    QuickSort(o, 0, num_linhas - 1, "enderecos");
-
-    printf("\nDepois da ordenação por Endereco:\n");
-    for (int i = 0; i < num_linhas; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i]);
-    }
-
-    QuickSort(o, 0, num_linhas - 1, "nomes");
-
-    printf("\nDepois da ordenação por Nome:\n");
-    for (int i = 0; i < num_linhas; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i]);
+    printf("\nOrdenado por Endereços:\n");
+    BubbleSort(o->enderecos, o->nomes, o->ids, o->payloads, o->num_registros);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: \n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
     Destroi(o);

@@ -1,6 +1,6 @@
 # Variáveis
 CC = gcc
-CFLAGS = -Wall -Iinclude
+CFLAGS = -g -Wall -Wextra -Iinclude
 SRCDIR = src
 OBJDIR = obj
 BINDIR = bin

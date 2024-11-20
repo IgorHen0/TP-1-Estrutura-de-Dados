@@ -85,22 +85,56 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
     o->enderecos = (char **)malloc(o->num_registros * sizeof(char *));
     o->payloads = (char **)malloc(o->num_registros * sizeof(char *));
 
+    if (!o->nomes || !o->ids || !o->enderecos || !o->payloads) {
+        perror("Erro ao alocar memória para os registros");
+        free(o->nomes); free(o->ids); free(o->enderecos); free(o->payloads);
+        fclose(arq);
+        return -1;
+    }
+
     // Lê os registros e armazena nos vetores
     for (int i = 0; i < o->num_registros; i++) {
         if (fgets(linha, sizeof(linha), arq)) {
-            char *token = strtok(linha, ",");
-            o->nomes[i] = strdup(token);
 
-            token = strtok(NULL, ",");
-            o->ids[i] = strdup(token);
+            // Copia o nome
+            int len = 0;
+            while (linha[len] != ',') len++;
+            o->nomes[i] = (char *)malloc((len + 1) * sizeof(char));
+            strncpy(o->nomes[i], linha, len);
+            o->nomes[i][len] = '\0';
 
-            token = strtok(NULL, ",");
-            o->enderecos[i] = strdup(token);
+            // Copia o id
+            int start = len + 1;
+            len = 0;
+            while (linha[start + len] != ',') len++;
+            o->ids[i] = (char *)malloc((len + 1) * sizeof(char));
+            strncpy(o->ids[i], linha + start, len);
+            o->ids[i][len] = '\0';
 
-            token = strtok(NULL, ",");
-            o->payloads[i] = strdup(token);
+            // Copia o endereço
+            start += len + 1;
+            len = 0;
+            while (linha[start + len] != ',') len++;
+            o->enderecos[i] = (char *)malloc((len + 1) * sizeof(char));
+            strncpy(o->enderecos[i], linha + start, len);
+            o->enderecos[i][len] = '\0';
+
+            // Copia o payload
+            start += len + 1;
+            len = 0;
+            while (linha[start + len] != '\n' && linha[start + len] != '\0') len++;
+            o->payloads[i] = (char *)malloc((len + 1) * sizeof(char));
+            strncpy(o->payloads[i], linha + start, len);
+            o->payloads[i][len] = '\0';
         } else {
-            perror("Erro ao ler um registro");
+            // Caso ocorra erro, libere a memória já alocada para o registro
+            for (int j = 0; j < i; j++) {
+                free(o->nomes[j]);
+                free(o->ids[j]);
+                free(o->enderecos[j]);
+                free(o->payloads[j]);
+            }
+            free(o->nomes); free(o->ids); free(o->enderecos); free(o->payloads);
             fclose(arq);
             return -1;
         }
