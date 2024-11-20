@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_LINHA 2048
+#define MAX_LINHA 2048 // aumentar tamanho
 
 OrdInd_ptr Cria() {
     OrdInd_ptr o = (OrdInd_ptr)malloc(sizeof(OrdInd_t));
@@ -60,6 +60,7 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
         }
     }
 
+    // trocar com num_registros (sexta linha dos arquivos representam registros, não tamanho do payload)
     // Lê o tamanho do payload
     if (fgets(linha, sizeof(linha), arq)) {
         o->tam_payload = atoi(linha);
