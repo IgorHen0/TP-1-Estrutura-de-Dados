@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_LINHA 2048 // aumentar tamanho
+#define MAX_LINHA 6500 
 
 OrdInd_ptr Cria() {
     OrdInd_ptr o = (OrdInd_ptr)malloc(sizeof(OrdInd_t));
@@ -63,7 +63,7 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
     // trocar com num_registros (sexta linha dos arquivos representam registros, não tamanho do payload)
     // Lê o tamanho do payload
     if (fgets(linha, sizeof(linha), arq)) {
-        o->tam_payload = atoi(linha);
+        o->num_registros = atoi(linha);
     } else {
         perror("Erro ao ler o tamanho do payload");
         fclose(arq);
@@ -71,9 +71,9 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
     }
 
     // Determina o número de registros a partir do arquivo
-    char *r_ptr = strstr(nomeEntrada, ".r");
-    if (r_ptr) {
-        o->num_registros = atoi(r_ptr + 2);
+    char *p_ptr = strstr(nomeEntrada, ".p");
+    if (p_ptr) {
+        o->tam_payload = atoi(p_ptr + 2);
     } else {
         perror("Erro ao determinar o número de registros");
         fclose(arq);
