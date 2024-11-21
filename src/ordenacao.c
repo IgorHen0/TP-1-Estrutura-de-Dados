@@ -60,22 +60,21 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
         }
     }
 
-    // trocar com num_registros (sexta linha dos arquivos representam registros, não tamanho do payload)
-    // Lê o tamanho do payload
+    // Lê o número de registros
     if (fgets(linha, sizeof(linha), arq)) {
         o->num_registros = atoi(linha);
     } else {
-        perror("Erro ao ler o tamanho do payload");
+        perror("Erro ao ler o número de registros");
         fclose(arq);
         return -1;
     }
 
-    // Determina o número de registros a partir do arquivo
+    // Determina o tamanho do payload a partir do arquivo
     char *p_ptr = strstr(nomeEntrada, ".p");
     if (p_ptr) {
         o->tam_payload = atoi(p_ptr + 2);
     } else {
-        perror("Erro ao determinar o número de registros");
+        perror("Erro ao ler o tamanho do payload");
         fclose(arq);
         return -1;
     }
