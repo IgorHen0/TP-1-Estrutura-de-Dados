@@ -99,3 +99,16 @@ void BubbleSort(char **arr, char **arr2, char **arr3, char **arr4, int n) {
         }
     }
 }
+
+// Função de Insertion Sort para ordenar com base em uma coluna
+void InsertionSort(OrdInd_ptr ordInd, char **base) {
+    for (int i = 1; i < ordInd->num_registros; i++) {
+        int j = i;
+        
+        // Enquanto a chave for menor, realize o swap
+        while (j > 0 && strcmp(base[j - 1], base[j]) > 0) {
+            Swap(ordInd, j, j - 1);
+            j--; // Continue movendo para trás
+        }
+    }
+}
