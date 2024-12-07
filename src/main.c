@@ -16,13 +16,19 @@ int main() {
     }
 
     char caminho_arquivo[2048];
-    snprintf(caminho_arquivo, sizeof(caminho_arquivo), "%s/entradas/cad.r5000.p5000.xcsv", cwd);
+    snprintf(caminho_arquivo, sizeof(caminho_arquivo), "%s/entradas/cad.r1000.p1000.xcsv", cwd);
 
     if (CarregaArquivo(o, caminho_arquivo) != 0) {
         printf("Erro ao carregar o arquivo.\n");
         Destroi(o);
         return 1;
     }
+
+    printf("%i\n", o->num_atributos);
+    for(int i = 0; i < o->num_atributos; i++) {
+        printf("%s\n", o->atributos[i]);
+    }
+    printf("%i\n", o->num_registros);
 
     int num_linhas = NumLinhas(o);
     // int num_atributos = NumAtributos(o);
@@ -61,43 +67,43 @@ int main() {
 
     // Bubble
 
-    // printf("Ordenado por Nomes:\n");
-    // BubbleSort(o->nomes, o->ids, o->enderecos, o->payloads, o->num_registros);
-    // for (int i = 0; i < o->num_registros; i++) {
-    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
-    // }
+    printf("Ordenado por Nomes:\n");
+    BubbleSort(o->nomes, o->ids, o->enderecos, o->payloads, o->num_registros);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    }
 
-    // printf("\nOrdenado por IDs:\n");
-    // BubbleSort(o->ids, o->nomes, o->enderecos, o->payloads, o->num_registros);
-    // for (int i = 0; i < o->num_registros; i++) {
-    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
-    // }
+    printf("\nOrdenado por IDs:\n");
+    BubbleSort(o->ids, o->nomes, o->enderecos, o->payloads, o->num_registros);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    }
 
-    // printf("\nOrdenado por Endereços:\n");
-    // BubbleSort(o->enderecos, o->nomes, o->ids, o->payloads, o->num_registros);
-    // for (int i = 0; i < o->num_registros; i++) {
-    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
-    // }
+    printf("\nOrdenado por Endereços:\n");
+    BubbleSort(o->enderecos, o->nomes, o->ids, o->payloads, o->num_registros);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    }
 
     // Insertion
 
-    // printf("Ordenado por Nomes:\n");
-    // InsertionSort(o, o->nomes);
-    // for (int i = 0; i < o->num_registros; i++) {
-    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
-    // }
+    printf("Ordenado por Nomes:\n");
+    InsertionSort(o, o->nomes);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    }
 
-    // printf("\nOrdenado por IDs:\n");
-    // InsertionSort(o, o->ids);
-    // for (int i = 0; i < o->num_registros; i++) {
-    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
-    // }
+    printf("\nOrdenado por IDs:\n");
+    InsertionSort(o, o->ids);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    }
 
-    // printf("\nOrdenado por Endereços:\n");
-    // InsertionSort(o, o->enderecos);
-    // for (int i = 0; i < o->num_registros; i++) {
-    //     printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
-    // }
+    printf("\nOrdenado por Endereços:\n");
+    InsertionSort(o, o->enderecos);
+    for (int i = 0; i < o->num_registros; i++) {
+        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+    }
 
     Destroi(o);
     return 0;

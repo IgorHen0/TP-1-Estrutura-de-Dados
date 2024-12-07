@@ -11,6 +11,7 @@ OrdInd_ptr Cria() {
     o->num_registros = 0;
     o->num_atributos = 0;
     o->tam_payload = 0;
+    o->atributos = NULL;
     o->nomes = NULL;
     o->ids = NULL;
     o->enderecos = NULL;
@@ -18,22 +19,47 @@ OrdInd_ptr Cria() {
     return o;
 }
 
-int Destroi(OrdInd_ptr o) {
-    if (o) {
+void Destroi(OrdInd_ptr o) {
+    if (!o) return;
+
+    if (o->atributos) {
+        for (int i = 0; i < o->num_atributos; i++) {
+            free(o->atributos[i]);
+        }
+        free(o->atributos);
+    }
+
+    if (o->nomes) {
         for (int i = 0; i < o->num_registros; i++) {
             free(o->nomes[i]);
-            free(o->ids[i]);
-            free(o->enderecos[i]);
-            free(o->payloads[i]);
         }
         free(o->nomes);
-        free(o->ids);
-        free(o->enderecos);
-        free(o->payloads);
-        free(o);
     }
-    return 0;
+
+    if (o->ids) {
+        for (int i = 0; i < o->num_registros; i++) {
+            free(o->ids[i]);
+        }
+        free(o->ids);
+    }
+
+    if (o->enderecos) {
+        for (int i = 0; i < o->num_registros; i++) {
+            free(o->enderecos[i]);
+        }
+        free(o->enderecos);
+    }
+
+    if (o->payloads) {
+        for (int i = 0; i < o->num_registros; i++) {
+            free(o->payloads[i]);
+        }
+        free(o->payloads);
+    }
+
+    free(o);
 }
+
 
 int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
     FILE *arq = fopen(nomeEntrada, "r");
@@ -51,10 +77,25 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
         return -1;
     }
 
-    // Pula as próximas 4 linhas (nomes dos atributos)
-    for (int i = 0; i < 4; i++) {
-        if (!fgets(linha, sizeof(linha), arq)) {
-            perror("Erro ao pular as linhas dos atributos");
+    // Aloca memória para os atributos
+    o->atributos = (char **)malloc(o->num_atributos * sizeof(char *));
+    if (!o->atributos) {
+        perror("Erro ao alocar memória para os atributos");
+        fclose(arq);
+        return -1;
+    }
+
+    // Lê e armazena os atributos
+    for (int i = 0; i < o->num_atributos; i++) {
+        if (fgets(linha, sizeof(linha), arq)) {
+            linha[strcspn(linha, "\n")] = '\0'; // Remove o caractere de nova linha
+            o->atributos[i] = strdup(linha);
+        } else {
+            perror("Erro ao ler os atributos");
+            for (int j = 0; j < i; j++) {
+                free(o->atributos[j]);
+            }
+            free(o->atributos);
             fclose(arq);
             return -1;
         }
