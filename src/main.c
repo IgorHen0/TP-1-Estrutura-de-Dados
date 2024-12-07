@@ -16,7 +16,7 @@ int main() {
     }
 
     char caminho_arquivo[2048];
-    snprintf(caminho_arquivo, sizeof(caminho_arquivo), "%s/entradas/cad.r1000.p1000.xcsv", cwd);
+    snprintf(caminho_arquivo, sizeof(caminho_arquivo), "%s/entradas/input.xcsv", cwd);
 
     if (CarregaArquivo(o, caminho_arquivo) != 0) {
         printf("Erro ao carregar o arquivo.\n");
@@ -24,85 +24,98 @@ int main() {
         return 1;
     }
 
-    printf("%i\n", o->num_atributos);
-    for(int i = 0; i < o->num_atributos; i++) {
-        printf("%s\n", o->atributos[i]);
-    }
-    printf("%i\n", o->num_registros);
-
     int num_linhas = NumLinhas(o);
     // int num_atributos = NumAtributos(o);
     // int tam_payload = TamPayload(o);
 
     // printf("Número de linhas: %d\n", num_linhas);
     // printf("Número de atributos: %d\n", num_atributos);
-    // printf("Tamanho do payload: %d\n", tam_payload);
+    // printf("Tamanho do%d\n", tam_payload);
 
     // printf("Antes da ordenação:\n");
     // for (int i = 0; i < num_linhas; i++) {
-    //     printf("ID: %s, Nome: %s, Endereço: %s, Payload: \n", o->ids[i], o->nomes[i], o->enderecos[i]);
+    //     printf("ID: %s, %s,%s,\n", o->ids[i], o->nomes[i], o->enderecos[i]);
     // }
 
     // printf("------------------------");
 
     // Quick
 
+    Informacoes(o);
+
     QuickSort(o, 0, num_linhas - 1, "nomes");
-    printf("\nDepois da ordenação por Nome:\n");
+    // printf("\nDepois da ordenação por Nome:\n");
     for (int i = 0; i < num_linhas; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
+
+    Informacoes(o);
 
     QuickSort(o, 0, num_linhas - 1, "ids");
-    printf("\nDepois da ordenação por ID:\n");
+    // printf("\nDepois da ordenação por ID:\n");
     for (int i = 0; i < num_linhas; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
+    Informacoes(o);
+
     QuickSort(o, 0, num_linhas - 1, "enderecos");
-    printf("\nDepois da ordenação por Endereco:\n");
+    // printf("\nDepois da ordenação por Endereco:\n");
     for (int i = 0; i < num_linhas; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
+
 
     // Bubble
 
-    printf("Ordenado por Nomes:\n");
+    Informacoes(o);
+
+    // printf("Ordenado por Nomes:\n");
     BubbleSort(o->nomes, o->ids, o->enderecos, o->payloads, o->num_registros);
     for (int i = 0; i < o->num_registros; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
-    printf("\nOrdenado por IDs:\n");
+    Informacoes(o);
+
+    // printf("\nOrdenado por IDs:\n");
     BubbleSort(o->ids, o->nomes, o->enderecos, o->payloads, o->num_registros);
     for (int i = 0; i < o->num_registros; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
-    printf("\nOrdenado por Endereços:\n");
+    Informacoes(o);
+
+    // printf("\nOrdenado por Endereços:\n");
     BubbleSort(o->enderecos, o->nomes, o->ids, o->payloads, o->num_registros);
     for (int i = 0; i < o->num_registros; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
     // Insertion
 
-    printf("Ordenado por Nomes:\n");
+    Informacoes(o);
+
+    // printf("Ordenado por Nomes:\n");
     InsertionSort(o, o->nomes);
     for (int i = 0; i < o->num_registros; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
-    printf("\nOrdenado por IDs:\n");
+    Informacoes(o);
+
+    // printf("\nOrdenado por IDs:\n");
     InsertionSort(o, o->ids);
     for (int i = 0; i < o->num_registros; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
-    printf("\nOrdenado por Endereços:\n");
+    Informacoes(o);
+
+    // printf("\nOrdenado por Endereços:\n");
     InsertionSort(o, o->enderecos);
     for (int i = 0; i < o->num_registros; i++) {
-        printf("Nome: %s, ID: %s, Endereço: %s, Payload: %s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
+        printf("%s,%s,%s,%s\n", o->nomes[i], o->ids[i], o->enderecos[i], o->payloads[i]);
     }
 
     Destroi(o);

@@ -86,7 +86,7 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
     }
 
     // Lê e armazena os atributos
-    for (int i = 0; i < o->num_atributos; i++) {
+    for (int i = 0; i < (o->num_atributos); i++) {
         if (fgets(linha, sizeof(linha), arq)) {
             linha[strcspn(linha, "\n")] = '\0'; // Remove o caractere de nova linha
             o->atributos[i] = strdup(linha);
@@ -111,14 +111,7 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada) {
     }
 
     // Determina o tamanho do payload a partir do arquivo
-    char *p_ptr = strstr(nomeEntrada, ".p");
-    if (p_ptr) {
-        o->tam_payload = atoi(p_ptr + 2);
-    } else {
-        perror("Erro ao ler o tamanho do payload");
-        fclose(arq);
-        return -1;
-    }
+    o->tam_payload = 10000;
 
     // Aloca memória para os vetores
     o->nomes = (char **)malloc(o->num_registros * sizeof(char *));
@@ -195,4 +188,12 @@ int NumLinhas(OrdInd_ptr o) {
 
 int TamPayload(OrdInd_ptr o) {
     return o->tam_payload;
+}
+
+void Informacoes(OrdInd_ptr o) {
+    printf("%d\n", o->num_atributos);
+    for(int i = 0; i < o->num_atributos; i++) {
+        printf("%s\n", o->atributos[i]);
+    }
+    printf("%d\n", o->num_registros);
 }

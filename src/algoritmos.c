@@ -75,7 +75,7 @@ int Particao(OrdInd_ptr o, int inicio, int fim, const char *atributo) {
 // Implementação do QuickSort
 void QuickSort(OrdInd_ptr o, int inicio, int fim, const char *atributo) {
     if (!o || inicio < 0 || fim >= o->num_registros || inicio > fim) {
-        fprintf(stderr, "Erro: Parâmetros inválidos para QuickSort.\n");
+        // fprintf(stderr, "Erro: Parâmetros inválidos para QuickSort.\n");
         return;
     }
 

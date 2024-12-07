@@ -18,5 +18,6 @@ int CarregaArquivo(OrdInd_ptr o, char *nomeEntrada);
 int NumAtributos(OrdInd_ptr o);
 int NumLinhas(OrdInd_ptr o);
 int TamPayload(OrdInd_ptr o);
+void Informacoes(OrdInd_ptr o);
 
 #endif // ORDENACAO_H
