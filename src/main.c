@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
-int main() {
+int main(int argc, char *argv[]) {
     OrdInd_ptr o = Cria();
 
     char cwd[1024];
@@ -15,8 +15,14 @@ int main() {
         return 1;
     }
 
+    if (argc < 2) {
+        printf("Uso: %s <nome_do_arquivo>\n", argv[0]);
+        Destroi(o);
+        return 1;
+    }
+
     char caminho_arquivo[2048];
-    snprintf(caminho_arquivo, sizeof(caminho_arquivo), "%s/entradas/input.xcsv", cwd);
+    snprintf(caminho_arquivo, sizeof(caminho_arquivo), "%s/entradas/%s", cwd, argv[1]);
 
     if (CarregaArquivo(o, caminho_arquivo) != 0) {
         printf("Erro ao carregar o arquivo.\n");
